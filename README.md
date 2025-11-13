@@ -23,6 +23,12 @@ NanoResFormer enables basecalling-free diagnostics by analyzing raw nanopore cur
 - Rapid on-site clinical decision support
 - Resource-efficient pathogen surveillance
 
+## Requirements
+
+- Python 3.12
+- PyTorch 2.8 
+- ONT raw signal data (CSV format) in specific structure
+
 ## Installation
 
 Due to flexibility across different devices (GPU/CPU), PyTorch is not included in `requirements.txt`.
@@ -74,20 +80,6 @@ with example data
 python NanoResFormer.py data_example\signals.csv Results
 ```
 
-## Performance
-
-- **Sensitivity**: 94.2%
-- **False Positive Rate**: 3.2%
-- **Processing Speed**: 1M reads in 6.3 hours
-- **Time to First Detection**: ~9 minutes (99.9% confidence)
-
-## Requirements
-
-- Python 3.12
-- PyTorch 2.8
-- ONT raw signal data (CSV format) in specific structure
-
-
 ## CSV Input Format
 
 The input CSV file must follow a specific structure for each signal row:
@@ -117,6 +109,14 @@ read_002,*,115.2,117.9,116.4,118.1,119.3
 read_003,*,114.8,120.2,118.5,121.0,119.6
 ```
 **Note**: Rows without the `*` separator (such as headers) are automatically skipped during processing.
+
+
+## Performance
+
+- **Sensitivity**: 94.2%
+- **False Positive Rate**: 3.2%
+- **Processing Speed**: 1M reads in 6.3 hours
+- **Time to First Detection**: ~9 minutes (99.9% confidence)
 
 ## License
 
