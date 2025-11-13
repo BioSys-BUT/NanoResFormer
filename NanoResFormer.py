@@ -44,6 +44,7 @@ if __name__ == "__main__":
     parser.add_argument(
         '--export_images', 
         action='store_true', 
+        default=False,
         help='If present, export annotated images for each processed signal. Default: False.'
     )
     parser.add_argument(
