@@ -47,8 +47,6 @@ Due to flexibility across different devices (GPU/CPU), PyTorch is not included i
 
 ## Usage
 
-## Usage
-
 To run NanoResFormer inference on raw signals, use the following command in your terminal:
 
 ```bash
@@ -95,7 +93,7 @@ python NanoResFormer.py data_example\signals.csv Results
 The input CSV file must follow a specific structure for each signal row:
 
 ```
-ID[,optional_labels],*,signal_value_1,signal_value_2,...,signal_value_n
+ID,*,signal_value_1,signal_value_2,...,signal_value_n
 ```
 
 ### Format Requirements
