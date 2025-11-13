@@ -40,7 +40,7 @@ Due to flexibility across different devices (GPU/CPU), PyTorch is not included i
     ```bash
     pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
     ```
-  * **For NVIDIA GPU (example for CUDA 12.1):**
+  * **For NVIDIA GPU (find your CUDA version via `nvidia-smi`):**
     ```bash
     pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
     ```
