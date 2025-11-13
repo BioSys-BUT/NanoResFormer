@@ -1,0 +1,4 @@
+num,ID,found_genes
+00000000,b381baa9-b1a1-4d7c-97a2-c648c03a3cd6,None
+00000001,cc7ee47f-62af-4333-a59f-0041097092bc,blaSHV;tetD
+00000002,49bc3b9f-d210-45e0-ba90-28b88974d573,blaOXA;aac(3);tetA

@@ -3,6 +3,8 @@ import numpy as np
 import torch
 import psutil
 import matplotlib.pyplot as plt
+import csv
+import sys
 
 
 def normalize_signal(signal):
@@ -97,7 +99,7 @@ def prepare_windows(signal, window_length, step):
         centers.append(pos + window_length // 2)
     return windows, centers
 
-def export_image(signal_plot_arr, centers_plot, results, images_dir, num, ID, found_genes, gene_names, label_colors):
+def export_image(signal_plot_arr, centers_plot, results, images_dir, num, ID, found_genes, gene_names, label_colors, labels):
     fig, ax1 = plt.subplots(figsize=(15, 5))
     ax1.plot(range(len(signal_plot_arr)), signal_plot_arr, label='Signal', alpha=0.5)
     ax1.set_xlabel('Position in signal')
@@ -122,7 +124,62 @@ def export_image(signal_plot_arr, centers_plot, results, images_dir, num, ID, fo
     ax2.legend(loc='upper right')
 
     title_found = found_genes if found_genes is not None else "None"
-    plt.title(f"Signal {num:08d} ID={ID} Predicted={title_found}")
+    if labels is not None:
+        true_labels = ", ".join([idx for idx in labels]) or "None"
+        plt.title(f"Signal {num:08d} ID={ID} Predicted={title_found} | True={true_labels}")
+    else:
+        plt.title(f"Signal {num:08d} ID={ID} Predicted={title_found}")
+
     out_png = os.path.join(images_dir, f"signal_{num:08d}.png")
     plt.savefig(out_png, bbox_inches='tight')
     plt.close(fig)
+
+
+
+def validate_csv_structure(csv_path):
+    """
+    Validate the structure of the input CSV file.
+    
+    Expected format: ID[,optional_labels],*,signal_values...
+    
+    Parameters:
+        csv_path (str): Path to the CSV file to validate.
+    
+    Raises:
+        SystemExit: If validation fails.
+    """
+    with open(csv_path, 'r', newline='') as _in:
+        csv_reader = csv.reader(_in)
+        for row_num, row in enumerate(csv_reader, start=1):
+            if '*' not in row:
+                continue  # Skip rows without '*' (assumed to be header or non-signal rows)
+            
+            try:
+                star_idx = row.index('*')
+            except ValueError:
+                continue
+            
+            # Check if there's at least an ID before '*'
+            if star_idx == 0:
+                print(f"Error: Row {row_num} has no ID before '*'")
+                print("Expected structure: ID[,optional_labels],*,signal_values...")
+                print("Program terminated.")
+                sys.exit(1)
+            
+            # Check if there's at least one signal value after '*'
+            signal_values = row[star_idx + 1:]
+            if len(signal_values) == 0:
+                print(f"Error: Row {row_num} has no signal values after '*'")
+                print("Expected structure: ID[,optional_labels],*,signal_values...")
+                print("Program terminated.")
+                sys.exit(1)
+            
+            # Verify signal values are numeric
+            try:
+                for val in signal_values:
+                    float(val)
+            except ValueError:
+                print(f"Error: Row {row_num} contains non-numeric signal values after '*'")
+                print("All signal values must be valid numbers.")
+                print("Program terminated.")
+                sys.exit(1)

@@ -34,7 +34,7 @@ Due to flexibility across different devices (GPU/CPU), PyTorch is not included i
   ```
 
 2. **Install PyTorch:**
-  Visit the official website https://pytorch.org/ and choose the version matching your **CUDA version** and operating system.
+  Visit the official website https://pytorch.org/get-started/locally/ and choose the version matching your **CUDA version** and operating system.
 
   * **For CPU version (universal):**
     ```bash
@@ -47,18 +47,33 @@ Due to flexibility across different devices (GPU/CPU), PyTorch is not included i
 
 ## Usage
 
-```python
-from nanoresformer import NanoResFormer
+## Usage
 
-# Initialize model
-model = NanoResFormer(
-   input_dim=512,
-   hidden_dim=256,
-   num_layers=6
-)
+To run NanoResFormer inference on raw signals, use the following command in your terminal:
 
-# Process raw signal data
-predictions = model(raw_signal_data)
+```bash
+python NanoResFormer.py <csv_path> <out_dir> [--csv_name <csv_name>] [--OV <overlap_percentage>] [--Model <model_variant>] [--export_images] [--device_pref <device_preference>]
+```
+
+### Parameters
+
+- `<csv_path>`: Path to the input CSV file containing raw signals.
+- `<out_dir>`: Directory where results (CSV and optional images) will be saved.
+- `--csv_name <csv_name>`: (Optional) Base name for output files (default uses input filename).
+- `--OV <overlap_percentage>`: (Optional) Window overlap percentage (10-99). Default is 80.
+- `--Model <model_variant>`: (Optional) Model variant to use. Choices are 'low', 'middle', 'high'. Default is 'middle'.
+- `--export_images`: (Optional) If present, exports annotated images for each processed signal. Default is False.
+- `--device_pref <device_preference>`: (Optional) Device selection preference: 'cpu', 'cuda', or 'auto'. Default is 'auto'.
+
+
+### Example
+
+```bash
+python NanoResFormer.py signals.csv output_dir --csv_name results --OV 90 --Model high --export_images --device_pref cuda
+```
+with example data
+```bash
+python NanoResFormer.py data_example\signals.csv Results
 ```
 
 ## Performance
@@ -70,18 +85,40 @@ predictions = model(raw_signal_data)
 
 ## Requirements
 
-- Python 3.8+
-- PyTorch 2.0+
-- NumPy
-- ONT raw signal data (.fast5 or .pod5 format)
-- Additional dependencies in `requirements.txt`
+- Python 3.12
+- PyTorch 2.8
+- ONT raw signal data (CSV format) in specific structure
 
-## Future Development
 
-- Continuous real-time processing with adaptive data stream handling
-- Expanded resistance gene database coverage
-- Optimized transformer variants for reduced computational demands
-- Integration into ONT sequencing devices for autonomous diagnostics
+## CSV Input Format
+
+The input CSV file must follow a specific structure for each signal row:
+
+```
+ID[,optional_labels],*,signal_value_1,signal_value_2,...,signal_value_n
+```
+
+### Format Requirements
+
+- **ID**: Required identifier for each signal (first column)
+- **Separator**: Asterisk (`*`) character that marks the boundary between metadata and signal data
+- **Signal Values**: Numeric values (comma-separated) representing the raw nanopore current signal
+
+### Validation Rules
+
+1. Each signal row must contain the `*` separator
+2. At least one column (ID) must exist before the `*`
+3. At least one numeric signal value must exist after the `*`
+4. All signal values after `*` must be valid numeric values (integer or float)
+
+### CSV file example
+
+```csv
+read_001,*,120.5,118.3,122.1,119.7,121.8
+read_002,*,115.2,117.9,116.4,118.1,119.3
+read_003,*,114.8,120.2,118.5,121.0,119.6
+```
+**Note**: Rows without the `*` separator (such as headers) are automatically skipped during processing.
 
 ## License
 
