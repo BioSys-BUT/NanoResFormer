@@ -52,9 +52,9 @@ from nanoresformer import NanoResFormer
 
 # Initialize model
 model = NanoResFormer(
-    input_dim=512,
-    hidden_dim=256,
-    num_layers=6
+   input_dim=512,
+   hidden_dim=256,
+   num_layers=6
 )
 
 # Process raw signal data
@@ -66,7 +66,7 @@ predictions = model(raw_signal_data)
 - **Sensitivity**: 94.2%
 - **False Positive Rate**: 3.2%
 - **Processing Speed**: 1M reads in 6.3 hours
-- **Time to first detection**: ~9 minutes (99.9% confidence)
+- **Time to First Detection**: ~9 minutes (99.9% confidence)
 
 ## Requirements
 
@@ -93,12 +93,12 @@ If you use NanoResFormer in your research, please cite:
 
 ```bibtex
 @software{nanoresformer,
-  title={NanoResFormer: Real-time Resistance Detection from Nanopore Signals},
-  author={Jakubicek},
-  year={2024}
+  title={Basecalling-free resistance gene identification using a hybrid transformer in raw nanopore signals},
+  author={Jakubicek R. et al.},
+  year={2026}
 }
 ```
 
 ## Contact
 
-For questions and feedback, please open an issue on GitHub.
+For questions and feedback, please open an issue on GitHub or contact us via email at [jakubicek@vutbr.cz](mailto:jakubicek@vutbr.cz) or [jakubickova@vut.cz](mailto:jakubickova@vut.cz).
