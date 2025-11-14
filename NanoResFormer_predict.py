@@ -40,7 +40,7 @@ def NanoResFormer_predict(csv_path,
     print("Starting NanoResFormer - Nanopore Signal Transformer for Gene Detection")
     print("Version: 2.0")
     print("Licence: MIT (see project LICENSE file)")
-    print("Please cite: Jakubicek et al., NanoResFormer (2025)")
+    print("Please cite: Jakubicek et al., Basecalling-free resistance gene identification using a hybrid transformer in raw nanopore signals (2026)")
     print("----------------------------------------")
 
     print("Starting NanoResFormer inference...")
@@ -56,7 +56,7 @@ def NanoResFormer_predict(csv_path,
         print("Program terminated.")
         sys.exit(1)
 
-    print("--- Input CSV file found.")
+    print("  - Input CSV file found.")
 
     # Check CSV structure: first column should be ID, then '*', then at least one signal value
     print("Validating CSV structure...")
@@ -64,14 +64,14 @@ def NanoResFormer_predict(csv_path,
 
 
 
-    print("--- CSV structure validation passed.")
+    print("  - CSV structure validation passed.")
 
     # warn if provided csv_name matches input csv filename (without extension)
     input_base = os.path.splitext(os.path.basename(csv_path))[0]
     if csv_name:
         provided_base = os.path.splitext(csv_name)[0]
         if provided_base == input_base:
-            print("---Warning--- Provided csv_name matches input CSV filename without extension. This may overwrite the original file if out_dir points to the same directory as the input CSV.")
+            print("  ---Warning--- Provided csv_name matches input CSV filename without extension. This may overwrite the original file if out_dir points to the same directory as the input CSV.")
 
 
     # Quick scan: count signals (rows containing '*') and print the count
@@ -82,7 +82,7 @@ def NanoResFormer_predict(csv_path,
         for row in csv_reader:
             if '*' in row:
                 total_signals += 1
-    print(f"--- Number of signals found in file: {total_signals}")
+    print(f"  - Number of signals found in file: {total_signals}")
 
     window_length = 40000
     n_heads = 2
@@ -100,7 +100,7 @@ def NanoResFormer_predict(csv_path,
         os.makedirs(images_dir, exist_ok=True)
 
     FullModelClass, model_name, d_model = model_mapping(Model)
-    model_path = f"models\\{model_name}.pth"
+    model_path = os.path.join("models", f"{model_name}.pth")
 
     device = select_device(device_pref)
 
@@ -119,8 +119,8 @@ def NanoResFormer_predict(csv_path,
         print("Program terminated.")
         sys.exit(1)
 
-    print(f"--- Model file found: {model_path}")
-    print(f"--- Device: {device}")
+    print(f"  - Model file found: {model_path}")
+    print(f"  - Device: {device}")
 
     window_overlap_percent = OV
     window_overlap = int(window_length * window_overlap_percent / 100)
@@ -228,15 +228,15 @@ def NanoResFormer_predict(csv_path,
                 interval = 1  # every N-th signal; adjust this value as needed
                 if processed_signals % interval == 0 or processed_signals == total_signals:
                     percent = processed_signals * 100.0 / total_signals if total_signals else 100.0
-                    sys.stdout.write(f"\r--- Processing: {processed_signals}/{total_signals} ({percent:.1f}%)")
+                    sys.stdout.write(f"\r  - Processing: {processed_signals}/{total_signals} ({percent:.1f}%)")
                     sys.stdout.flush()
             else:
-                sys.stdout.write("\r--- Processing: 100% \n")
+                sys.stdout.write("\r  - Processing: 100% \n")
                 sys.stdout.flush()
 
     # finish progress line
     if total_signals > 0:
-        print("\n--- Processing complete.")
+        print("\n  - Processing complete.")
 
     results_csv = os.path.join(out_dir, f"{csv_name}.csv")
     results_df.to_csv(results_csv, index=False)
@@ -247,8 +247,8 @@ def NanoResFormer_predict(csv_path,
 
 if __name__ == "__main__":
     res = NanoResFormer_predict(
-        "data_example\\signals.csv",
-        # "data_example\\signals_labeled.csv",
+        os.path.join("data_example", "signals.csv"),
+        # os.path.join("data_example", "signals_labeled.csv"),
         "Results_example",
         # csv_name="results_example",
         OV=80,
