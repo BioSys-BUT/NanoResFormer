@@ -46,9 +46,9 @@ Due to flexibility across different devices (GPU/CPU), PyTorch is not included i
     ```bash
     pip install torch==2.8.0 torchvision==0.17.0 torchaudio==2.8.0 --index-url https://download.pytorch.org/whl/cpu
     ```
-  * **For NVIDIA GPU Cuda version 12.1 (find your CUDA version via `nvidia-smi`):**
+  * **For NVIDIA GPU Cuda version 12.6 (find your CUDA version via `nvidia-smi`):**
     ```bash
-    pip install torch==2.8.0 torchvision==0.17.0 torchaudio==2.8.0 --index-url https://download.pytorch.org/whl/cu121
+    pip install torch==2.8.0 torchvision==0.17.0 torchaudio==2.8.0 --index-url https://download.pytorch.org/whl/cu126
     ```
 
 ## Usage
