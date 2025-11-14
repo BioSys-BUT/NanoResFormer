@@ -1,5 +1,11 @@
 # NanoResFormer
 
+> [!WARNING]
+> **🚨 WORKING BRANCH - RESEARCH USE ONLY 🚨**
+> 
+> This branch contains **unrefined research code** used for model training, validation, and statistical analysis during the study. The code is not optimized for production use and may contain experimental features, debug outputs, and temporary implementations.
+
+
 A hybrid convolutional-transformer neural network for real-time antimicrobial resistance detection directly from Oxford Nanopore Technologies (ONT) raw signal data.
 
 ![NanoResFormer](Image.png "NanoResFormer workflow")
