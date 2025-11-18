@@ -10,13 +10,14 @@ NanoResFormer enables basecalling-free diagnostics by analyzing raw nanopore cur
 
 ## Content
 
-- [Key Features](#Key Features)
-- [Clinical Applications](#Clinical Applications)
+- [Key Features](#Features)
+- [Clinical Applications](#Clinical-Applications)
 - [Requirements](#Requirements)
 - [Installation](#Installation)
 - [Usage](#Usage)
   - [Parameters](#Parameters)
   - [Example](#Example)
+  - [CSV Input Format](#CSV-Input-Format)
 - [License](#license)
 - [Citation](#citation)
 
