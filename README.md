@@ -8,6 +8,19 @@ A hybrid convolutional-transformer neural network for real-time antimicrobial re
 
 NanoResFormer enables basecalling-free diagnostics by analyzing raw nanopore current signals (squiggles) to detect antimicrobial resistance genes during sequencing. This approach significantly reduces time-to-diagnosis and computational requirements compared to conventional basecalling-dependent workflows.
 
+## Content
+
+- [Key Features](#Key Features)
+- [Clinical Applications](#Clinical Applications)
+- [Requirements](#Requirements)
+- [Installation](#Installation)
+- [Usage](#Usage)
+  - [Parameters](#Parameters)
+  - [Example](#Example)
+- [License](#license)
+- [Citation](#citation)
+
+
 ## Key Features
 
 - **Direct Signal Analysis**: Processes raw ONT current signals without basecalling
